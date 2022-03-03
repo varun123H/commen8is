@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime comment system</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4><strong>My fucking realtime project</strong></h4>
+                <p>Showcase your products and services. Accept one‑time or recurring payments. And do it all globally.
+                    Whether you’re selling studded cat collars or ongoing access to your content, do it with a
+                    completely customizable ecommerce platform that lets you open shop and grow your store alongside
+                    your business.</p>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h4 class="border-bottom pb-12">Comments</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Write a comment</label>
+                    <textarea id="textarea" rows="3" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button id="submitBtn" class="btn btn-primary float-right">Post comment</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul  class="comment__box">
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/app.js"></script>
+</body>
+
+</html>
