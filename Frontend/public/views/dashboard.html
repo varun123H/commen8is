@@ -1,0 +1,97 @@
+<!-- Dashboard View -->
+<div class="dashboard-container">
+    <div ng-show="loading" class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div ng-hide="loading">
+        <!-- Header Stats -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Students</h5>
+                        <h2>{{ statistics.totalStudents }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Anomalies Detected</h5>
+                        <h2>{{ statistics.anomalousStudents }}</h2>
+                        <small>{{ anomalyPercentage }}% of students</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Alerts</h5>
+                        <h2>{{ statistics.totalAlerts }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Avg Anomaly Score</h5>
+                        <h2>{{ statistics.averageAnomalyScore | number:'1.2-2' }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anomaly Types Section -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Anomaly Types Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <div ng-if="statistics.alertsByType">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center" ng-repeat="type in statistics.alertsByType">
+                                    {{ type.type }}
+                                    <span class="badge badge-danger badge-pill">{{ type.count }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Alerts -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Real-time Anomaly Alerts</h5>
+                        <button class="btn btn-sm btn-primary" ng-click="refreshAnomalies()" ng-disabled="loading">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                        <div ng-if="anomalyAlerts.length === 0" class="alert alert-success">
+                            No anomalies detected. All students are performing normally!
+                        </div>
+                        <div ng-repeat="alert in anomalyAlerts" class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>{{ alert.anomalyType }}</strong> - <em>{{ alert.studentName }}</em>
+                            <br>
+                            <small>{{ alert.description }}</small>
+                            <br>
+                            <small class="text-muted">Score: {{ alert.anomalyScore | number:'1.1-1' }}/10 | {{ alert.detectedAt | date:'short' }}</small>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="dismissAlert($index)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

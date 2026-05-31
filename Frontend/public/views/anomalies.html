@@ -1,0 +1,69 @@
+<!-- Anomalies View -->
+<div class="anomalies-container">
+    <div class="row mb-3">
+        <div class="col-12">
+            <h3>Detected Anomalies & Alerts</h3>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text">Filter by Type:</span>
+                <select class="form-control" ng-model="filterType" ng-options="type for type in anomalyTypes">
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Anomalies List -->
+    <div class="row">
+        <div class="col-12">
+            <div ng-show="loading" class="text-center">
+                <div class="spinner-border" role="status"></div>
+            </div>
+
+            <div ng-hide="loading">
+                <div ng-if="filteredAnomalies().length === 0" class="alert alert-success">
+                    ✓ No anomalies found. All students are performing normally!
+                </div>
+
+                <div ng-repeat="anomaly in filteredAnomalies() | orderBy:'-detectedAt'" class="card mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="card-title">
+                                    <span class="badge badge-danger">{{ anomaly.anomalyType }}</span>
+                                    {{ anomaly.studentName }} ({{ anomaly.studentId }})
+                                </h5>
+                                <p class="card-text">{{ anomaly.description }}</p>
+                                <small class="text-muted">
+                                    Detected: {{ anomaly.detectedAt | date:'MMM d, yyyy HH:mm:ss' }} | 
+                                    Score: {{ anomaly.anomalyScore | number:'1.1-1' }}/10
+                                </small>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" 
+                                         style="width: {{ anomaly.anomalyScore * 10 }}%;" 
+                                         aria-valuenow="{{ anomaly.anomalyScore }}" 
+                                         aria-valuemin="0" aria-valuemax="10">
+                                        {{ anomaly.anomalyScore | number:'1.1-1' }}
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-success mt-2" ng-click="resolveAnomaly(anomaly)" ng-hide="anomaly.resolved">
+                                    ✓ Mark Resolved
+                                </button>
+                                <span class="badge badge-success mt-2" ng-show="anomaly.resolved">✓ Resolved</span>
+                                <a href="#!/student/{{ anomaly.studentId }}" class="btn btn-sm btn-info mt-2">
+                                    View Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

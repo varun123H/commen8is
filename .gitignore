@@ -1,0 +1,43 @@
+# Binaries and build output
+bin/
+obj/
+*.dll
+*.exe
+*.so
+*.dylib
+.vs/
+.vscode/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+data/
+.mongo*/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Misc
+dist/
+build/
+.nuget/
+*.nupkg

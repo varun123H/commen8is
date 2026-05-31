@@ -1,0 +1,85 @@
+<!-- Student Detail View -->
+<div class="student-detail-container">
+    <div ng-show="loading" class="text-center">
+        <div class="spinner-border" role="status"></div>
+    </div>
+
+    <div ng-hide="loading">
+        <!-- Student Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ student.name }}</h3>
+                        <p class="text-muted">ID: {{ student.studentId }} | Email: {{ student.email }}</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Average Score:</strong> 
+                                <h4 class="badge badge-primary">{{ student.averageScore }}%</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Enrollment:</strong> 
+                                <p>{{ student.enrollmentDate | date:'MMM d, yyyy' }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Status:</strong>
+                                <p ng-show="student.isAnomaly" class="text-danger"><strong>⚠️ Anomalous Behavior</strong></p>
+                                <p ng-hide="student.isAnomaly" class="text-success"><strong>✓ Normal</strong></p>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Last Updated:</strong> 
+                                <p>{{ student.lastUpdated | date:'MMM d, yyyy HH:mm' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Sessions Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Learning Sessions (Last 20)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Duration (min)</th>
+                                        <th>Score</th>
+                                        <th>Attempts</th>
+                                        <th>Topics</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="session in sessions">
+                                        <td>{{ session.sessionDate | date:'MMM d, yyyy HH:mm' }}</td>
+                                        <td>{{ session.durationMinutes }}</td>
+                                        <td>
+                                            <span class="badge" ng-class="{'badge-success': session.score >= 70, 'badge-warning': session.score < 70 && session.score >= 50, 'badge-danger': session.score < 50}">
+                                                {{ session.score }}%
+                                            </span>
+                                        </td>
+                                        <td>{{ session.attemptCount }}</td>
+                                        <td>{{ session.topicsRevised.join(', ') }}</td>
+                                        <td>
+                                            <span class="badge badge-danger" ng-show="session.isAnomaly">Anomalous</span>
+                                            <span class="badge badge-success" ng-hide="session.isAnomaly">Normal</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#!/students" class="btn btn-secondary mt-3">← Back to Students</a>
+    </div>
+</div>
