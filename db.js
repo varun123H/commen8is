@@ -1,6 +1,6 @@
 function dbConnect(){
     const mongoose = require('mongoose')
-    const url = process.env.MONGO_URL || 'mongodb+srv://rupali:vannybadave@cluster0.sxxuv.mongodb.net/comments?retryWrites=true&w=majority'
+    const url = process.env.MONGO_URL || 'mongodb://localhost:27017/comments'
 
      mongoose.connect(url, {
          useNewUrlParser : true,

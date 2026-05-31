@@ -5,6 +5,6 @@ const commentSchema = new Schema({
     comment : {type:String, required:true}
 }, {timestamps:true})
 
-const Comment = mongoose.model('Commit', commentSchema)
+const Comment = mongoose.model('chats', commentSchema)
 
 module.exports = Comment
