@@ -1,0 +1,99 @@
+<!-- Students View -->
+<div class="students-container">
+    <div class="row mb-3">
+        <div class="col-12">
+            <h3>Student Management</h3>
+            <button class="btn btn-primary" ng-click="toggleForm()">
+                {{ showForm ? '✕ Cancel' : '+ Add New Student' }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Student Form -->
+    <div class="row mb-3" ng-show="showForm">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Add New Student</div>
+                <div class="card-body">
+                    <form ng-submit="addStudent()">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Student ID</label>
+                                <input type="text" class="form-control" ng-model="newStudent.studentId" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Name</label>
+                                <input type="text" class="form-control" ng-model="newStudent.name" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Email</label>
+                                <input type="email" class="form-control" ng-model="newStudent.email" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Average Score</label>
+                                <input type="number" class="form-control" ng-model="newStudent.averageScore" min="0" max="100">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Student</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="row">
+        <div class="col-12">
+            <div ng-show="loading" class="text-center">
+                <div class="spinner-border" role="status"></div>
+            </div>
+            
+            <div ng-hide="loading">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Average Score</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="student in students">
+                                <td><strong>{{ student.studentId }}</strong></td>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.email }}</td>
+                                <td>
+                                    <span class="badge badge-success" ng-show="student.averageScore >= 70">
+                                        {{ student.averageScore }}%
+                                    </span>
+                                    <span class="badge badge-warning" ng-show="student.averageScore < 70 && student.averageScore >= 50">
+                                        {{ student.averageScore }}%
+                                    </span>
+                                    <span class="badge badge-danger" ng-show="student.averageScore < 50">
+                                        {{ student.averageScore }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-danger" ng-show="student.isAnomaly">⚠️ Anomaly</span>
+                                    <span class="badge badge-success" ng-hide="student.isAnomaly">✓ Normal</span>
+                                </td>
+                                <td>
+                                    <a href="#!/student/{{ student.studentId }}" class="btn btn-sm btn-info">View Details</a>
+                                    <button class="btn btn-sm btn-danger" ng-click="deleteStudent($index)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div ng-if="students.length === 0" class="alert alert-info">
+                    No students found. <a href="#!/students" ng-click="toggleForm()">Add one now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
